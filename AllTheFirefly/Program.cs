@@ -9,7 +9,7 @@
             {
                 {"0_0", new Ceil(0, 0, "Кликер мощи КИРИЛЛА", ConsoleColor.Gray, KirillClicker.Start)},
                 {"1_0", new Ceil(1, 0, "Симулятор Вячеслава", ConsoleColor.DarkGray, VSimulator.Start)},
-                {"0_1", new Ceil(0, 1, "123", ConsoleColor.DarkGray, () => Oh.pr("Заходим в 123"))},
+                {"0_1", new Ceil(0, 1, "mp3/wav плеер", ConsoleColor.DarkGray, MP3player.Start)},
                 {"1_1", new Ceil(1, 1, "Артём ди пидиди", ConsoleColor.Gray, () => Oh.pr("Заходим в Артём ди пидиди"))}
             };
 
@@ -50,6 +50,7 @@
                     case ' ':
                         Console.Clear();
                         ceils[currentCeilKey].OnClick();
+                        Console.Clear();
                         break;
                     case 'w':
                         dy = -1;

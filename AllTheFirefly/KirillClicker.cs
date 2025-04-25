@@ -20,6 +20,7 @@ namespace AllTheFirefly
 
         public static void Start()
         {
+            inGame = true;
             Oh.nl();
             Oh.prc("#################################", ConsoleColor.Green);
             Oh.prc("#Kirill clicker THE CASES UPDATE#", ConsoleColor.Green);
