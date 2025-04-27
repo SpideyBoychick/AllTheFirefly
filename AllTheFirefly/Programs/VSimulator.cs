@@ -1,4 +1,6 @@
-﻿namespace AllTheFirefly
+﻿using AllTheFirefly.Main;
+
+namespace AllTheFirefly.Programs
 {
     // V = Vyacheslav
     static class VSimulator

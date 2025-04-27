@@ -1,6 +1,7 @@
 ﻿using System.Text;
+using AllTheFirefly.Programs;
 
-namespace AllTheFirefly
+namespace AllTheFirefly.Main
 {
     class Ceil
     {
@@ -10,16 +11,16 @@ namespace AllTheFirefly
         private string text;
         private ConsoleColor color;
         public bool isCurrent;
-        public Action OnClick;
+        public IProgram program;
 
-        public Ceil(int x, int y, string text, ConsoleColor color, Action onClick)
+        public Ceil(int x, int y, string text, ConsoleColor color, IProgram program)
         {
             this.x = x;
             this.y = y;
             this.text = text;
             this.color = color;
             isCurrent = false;
-            OnClick = onClick;
+            this.program = program;
         }
 
         public void Draw()
@@ -41,9 +42,9 @@ namespace AllTheFirefly
             {
                 line2.Append(" ");
             }
-            Console.SetCursorPosition(x * width, y * 3 + 1);
-            Oh.prc(line.ToString(), c);
             Console.SetCursorPosition(x * width, y * 3 + 2);
+            Oh.prc(line.ToString(), c);
+            Console.SetCursorPosition(x * width, y * 3 + 3);
             if (2 * line2.Length + 2 != width)
             {
                 Oh.prc("#" + line2 + text + line2 + " #", c);
@@ -53,7 +54,7 @@ namespace AllTheFirefly
                 Oh.prc("#" + line2 + text + line2 + "#", c);
             }
 
-            Console.SetCursorPosition(x * width, y * 3 + 3);
+            Console.SetCursorPosition(x * width, y * 3 + 4);
             Oh.prc(line.ToString(), c);
         }
     }

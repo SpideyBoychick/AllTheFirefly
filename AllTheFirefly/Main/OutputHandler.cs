@@ -1,4 +1,4 @@
-﻿namespace AllTheFirefly
+﻿namespace AllTheFirefly.Main
 {
     //output handler
     static class Oh
