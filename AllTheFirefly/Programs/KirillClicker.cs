@@ -35,9 +35,7 @@ namespace AllTheFirefly.Programs
 
         private ConsoleColor[] colors = new ConsoleColor[] { ConsoleColor.Red, ConsoleColor.DarkRed, ConsoleColor.Green, ConsoleColor.DarkGreen, ConsoleColor.Blue, ConsoleColor.DarkBlue, ConsoleColor.White, ConsoleColor.Black, ConsoleColor.Gray, ConsoleColor.DarkGray, ConsoleColor.Cyan, ConsoleColor.DarkCyan, ConsoleColor.Magenta, ConsoleColor.DarkMagenta, ConsoleColor.Yellow, ConsoleColor.DarkYellow };
 
-        private char command = '0';
-
-        public async Task Draw()
+        public void Draw()
         {
             Console.SetCursorPosition(0, 1);
             Oh.prc("#################################", ConsoleColor.Green);
@@ -54,39 +52,34 @@ namespace AllTheFirefly.Programs
             switch (currentState)
             {
                 case GameState.Click:
-                    if (Console.KeyAvailable)
+                    if (IH.Match(ConsoleKey.Spacebar))
                     {
-                        command = Console.ReadKey().KeyChar;
+                        kirillPower += swordPurchase.Purch;
                     }
-                    else
+                    else if (IH.Match(ConsoleKey.H))
                     {
-                        command = '0';
+                        Console.Clear();
+                        currentState = GameState.Help;
                     }
-                    switch (command)
+                    else if (IH.Match(ConsoleKey.U))
                     {
-                        case ' ':
-                            kirillPower += swordPurchase.Purch;
-                            break;
-                        case 'h':
-                            Console.Clear();
-                            currentState = GameState.Help;
-                            break;
-                        case 'u':
-                            Console.Clear();
-                            currentState = GameState.Upgrade;
-                            break;
-                        case 'c':
-                            Console.Clear();
-                            currentState = GameState.Cases;
-                            break;
-                        case 's':
-                            Console.Clear();
-                            currentState = GameState.Stat;
-                            break;
-                        case 'e':
-                            FMain.inMenu = true;
-                            Console.Clear();
-                            break;
+                        Console.Clear();
+                        currentState = GameState.Upgrade;
+                    }
+                    else if (IH.Match(ConsoleKey.C))
+                    {
+                        Console.Clear();
+                        currentState = GameState.Cases;
+                    }
+                    else if (IH.Match(ConsoleKey.S))
+                    {
+                        Console.Clear();
+                        currentState = GameState.Stat;
+                    }
+                    else if (IH.Match(ConsoleKey.E))
+                    {
+                        FMain.inMenu = true;
+                        Console.Clear();
                     }
                     break;
                 case GameState.Help:
@@ -175,37 +168,28 @@ namespace AllTheFirefly.Programs
             Oh.prc("1: мечъ дабы со злого люда больше мощи получать : " + swordPurchase.Cost + " мощи надобно.", ConsoleColor.Gray);
             Oh.prc("2: часики волшебные, дабы мощъ пассивно получать. Но знай, не ленись добрый молодецъ! : " + secPurchase.Cost + " мощи надобно.", ConsoleColor.DarkGray);
             Oh.prc("3: в магазинчик-то у меня никто не ходит. Пожертвуй добрый молодецъ на развитие моего магазина, а я тебе отплачу. Заплати-ка мне " + shopPurchase.Cost + " мощи.", ConsoleColor.Gray);
-            if (Console.KeyAvailable)
-            {
-                command = Console.ReadKey().KeyChar;
-            }
-            else
-            {
-                command = '=';
-            }
             Oh.nl();
             if (!canExitMenu)
             {
-                switch (command)
+                if (IH.Match(ConsoleKey.D1))
                 {
-                    case '1':
-                        swordPurchase.Buy(ref kirillPower);
-                        canExitMenu = true;
-                        break;
-                    case '2':
-                        secPurchase.Buy(ref kirillPower); 
-                        canExitMenu = true;
-                        break;
-                    case '3':
-                        shopPurchase.Buy(ref kirillPower);
-                        canExitMenu = true;
-                        break;
-                    case '=':
-                        break;
-                    default:
-                        Oh.pr("Не понимаю я таких слов заморских... Ну ничего, приходи ещё!");
-                        canExitMenu = true;
-                        break;
+                    swordPurchase.Buy(ref kirillPower);
+                    canExitMenu = true;
+                }
+                else if (IH.Match(ConsoleKey.D2))
+                {
+                    secPurchase.Buy(ref kirillPower);
+                    canExitMenu = true;
+                }
+                else if (IH.Match(ConsoleKey.D3))
+                {
+                    shopPurchase.Buy(ref kirillPower);
+                    canExitMenu = true;
+                }
+                else if(!IH.Match(ConsoleKey.Delete))
+                {
+                    Oh.pr("Не понимаю я таких слов заморских... Ну ничего, приходи ещё!");
+                    canExitMenu = true;
                 }
             }
             else
@@ -227,45 +211,38 @@ namespace AllTheFirefly.Programs
             Oh.prc("4: Java кейс - 20000 мощи. 30% шанс пройти игру.", ConsoleColor.DarkGray);
             Oh.prc("5: C# кейс - 100000 мощи. 50% шанс пройти игру.", ConsoleColor.Gray);
 
-            if (Console.KeyAvailable)
-            {
-                command = Console.ReadKey().KeyChar;
-            }
-            else
-            {
-                command = '=';
-            }
             Oh.nl();
             if (!canExitMenu)
             {
-                switch (command)
+                if (IH.Match(ConsoleKey.D1))
                 {
-                    case '1':
-                        canExitMenu = true;
-                        PythonCase.Open(ref kirillPower, ref currentState, ref currentLoozeCashback, ref canExitMenu);
-                        break;
-                    case '2':
-                        canExitMenu = true;
-                        CppCase.Open(ref kirillPower, ref currentState, ref currentLoozeCashback, ref canExitMenu);
-                        break;
-                    case '3':
-                        canExitMenu = true;
-                        RustCase.Open(ref kirillPower, ref currentState, ref currentLoozeCashback, ref canExitMenu);
-                        break;
-                    case '4':
-                        canExitMenu = true;
-                        JavaCase.Open(ref kirillPower, ref currentState, ref currentLoozeCashback, ref canExitMenu);
-                        break;
-                    case '5':
-                        canExitMenu = true;
-                        CsCase.Open(ref kirillPower, ref currentState, ref currentLoozeCashback, ref canExitMenu);
-                        break;
-                    case '=':
-                        break;
-                    default:
-                        Oh.pr("Я не понял что ты сказал");
-                        canExitMenu = true;
-                        break;
+                    canExitMenu = true;
+                    PythonCase.Open(ref kirillPower, ref currentState, ref currentLoozeCashback, ref canExitMenu);
+                }
+                else if (IH.Match(ConsoleKey.D2))
+                {
+                    canExitMenu = true;
+                    CppCase.Open(ref kirillPower, ref currentState, ref currentLoozeCashback, ref canExitMenu);
+                }
+                else if (IH.Match(ConsoleKey.D3))
+                {
+                    canExitMenu = true;
+                    RustCase.Open(ref kirillPower, ref currentState, ref currentLoozeCashback, ref canExitMenu);
+                }
+                else if (IH.Match(ConsoleKey.D4))
+                {
+                    canExitMenu = true;
+                    JavaCase.Open(ref kirillPower, ref currentState, ref currentLoozeCashback, ref canExitMenu);
+                }
+                else if (IH.Match(ConsoleKey.D5))
+                {
+                    canExitMenu = true;
+                    CsCase.Open(ref kirillPower, ref currentState, ref currentLoozeCashback, ref canExitMenu);
+                }
+                else if (!IH.Match(ConsoleKey.Delete))
+                {
+                    Oh.pr("Я не понял что ты сказал");
+                    canExitMenu = true;
                 }
             }
             else

@@ -13,7 +13,7 @@ namespace AllTheFirefly.Main
         public static void Main(string[] args)
         {
             Console.CursorVisible = false;
-            
+
             double drawInterval = 1_000_000_000 / FPS;
             double delta = 0;
             long lastTime = nanoTime();
@@ -38,6 +38,8 @@ namespace AllTheFirefly.Main
                     {
                         currentProgram.Draw();
                     }
+
+                    IH.Update();
                 }
             }
         }

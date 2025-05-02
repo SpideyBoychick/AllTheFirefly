@@ -12,7 +12,6 @@ namespace AllTheFirefly.Main
                 {"1_1", new Ceil(1, 1, "Артём ди пидиди", ConsoleColor.Gray, new KirillClicker())}
             };
 
-        private static char command = '0';
         private static int currentX = 0;
         private static int currentY = 0;
         private static int maxX = 1;
@@ -37,64 +36,56 @@ namespace AllTheFirefly.Main
                     ceils[x + "_" + y].Draw();
                 }
             }
-
-            if (Console.KeyAvailable)
+            
+            if (IH.Match(ConsoleKey.Spacebar))
             {
-                command = Console.ReadKey().KeyChar;
-            }
-            else
-            {
-                command = '0';
-            }
 
-            int dx = 0;
-            int dy = 0;
-            switch (command)
-            {
-                case ' ':
-                    Console.Clear();
-                    FMain.inMenu = false;
-                    break;
-                case 'w':
-                    dy = -1;
-                    break;
-                case 's':
-                    dy = 1;
-                    break;
-                case 'a':
-                    dx = -1;
-                    break;
-                case 'd':
-                    dx = 1;
-                    break;
-                case 'k':
-                    if (New.Speed - 0.1 >= 0)
-                    {
-                        New.Speed -= 0.1;
-                    }
-                    else
-                    {
-                        New.Speed = 0;
-                    }
-                    break;
-                case 'l':
-                    New.Speed += 0.1;
-                    break;
+                Console.Clear();
+                IH.inputStr = "";
+                FMain.inMenu = false;
             }
-
-            if ("wsad".Contains(command))
+            else if (IH.Match(ConsoleKey.W))
             {
                 ceils[currentCeilKey].isCurrent = false;
-                currentX += dx;
-                currentY += dy;
-                if (currentX < 0)
-                    currentX = maxX;
-                if (currentX > maxX)
-                    currentX = 0;
+                currentY -= 1;
                 if (currentY < 0)
                     currentY = maxY;
+            }
+            else if (IH.Match(ConsoleKey.S))
+            {
+                ceils[currentCeilKey].isCurrent = false;
+                currentY += 1;
                 if (currentY > maxY)
                     currentY = 0;
+            }
+            else if (IH.Match(ConsoleKey.A))
+            {
+                ceils[currentCeilKey].isCurrent = false;
+                currentX -= 1;
+                if (currentX < 0)
+                    currentX = maxX;
+            }
+            else if (IH.Match(ConsoleKey.D))
+            {
+                ceils[currentCeilKey].isCurrent = false;
+                currentX += 1;
+                if (currentX > maxX)
+                    currentX = 0;
+            }
+            else if (IH.Match(ConsoleKey.K))
+            {
+                if (New.Speed - 0.1 >= 0)
+                {
+                    New.Speed -= 0.1;
+                }
+                else
+                {
+                    New.Speed = 0;
+                }
+            }
+            else if (IH.Match(ConsoleKey.L))
+            {
+                New.Speed += 0.1;
             }
         }
     }

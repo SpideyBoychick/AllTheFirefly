@@ -2,6 +2,6 @@
 {
     internal interface IProgram
     {
-        public Task Draw();
+        public void Draw();
     }
 }

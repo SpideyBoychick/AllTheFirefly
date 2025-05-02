@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-using System.Threading.Tasks;
-using AllTheFirefly.Main;
+﻿using AllTheFirefly.Main;
 using NAudio.Wave;
 
 namespace AllTheFirefly.Programs
@@ -11,7 +9,7 @@ namespace AllTheFirefly.Programs
         int iteration = 0;
         bool wasError = false;
 
-        public async Task Draw()
+        public void Draw()
         {
             Console.CursorVisible = true;
             if (wasError)
@@ -31,22 +29,30 @@ namespace AllTheFirefly.Programs
             {
                 try
                 {
-                    Console.Clear();
                     Console.SetCursorPosition(0, 1);
-                    NewsHandler.isNewsGo = false;
                     Oh.pr("Введите полный путь к файлу.");
-                    string path1 = Console.ReadLine();
-                    string path2 = path1;
-                    if (!(path1[path1.Length - 1] == 'v' && path1[path1.Length - 2] == 'a' && path1[path1.Length - 3] == 'w' && path1[path1.Length - 4] == '.'))
+                    string path1, path2;
+                    if (!IH.cki.Key.Equals(ConsoleKey.Enter))
                     {
-                        path2 = path2.Replace(".mp3", ".wav");
-                        ConvertMp3ToWav(path1, path2);
+                        Console.WriteLine(IH.inputStr + "                                                                                                   ");
                     }
+                    else
+                    {
+                        
+                        path1 = IH.inputStr;
+                        path2 = IH.inputStr;
+                        IH.inputStr = "";
+                        if (!(path1[path1.Length - 1] == 'v' && path1[path1.Length - 2] == 'a' && path1[path1.Length - 3] == 'w' && path1[path1.Length - 4] == '.'))
+                        {
+                            path2 = path2.Replace(".mp3", ".wav");
+                            ConvertMp3ToWav(path1, path2);
+                        }
 
-                    System.Media.SoundPlayer player = new System.Media.SoundPlayer(path2);
-                    player.Play();
-                    FMain.inMenu = true;
-                    NewsHandler.isNewsGo = true;
+                        System.Media.SoundPlayer player = new System.Media.SoundPlayer(path2);
+                        player.Play();
+                        FMain.inMenu = true;
+                        NewsHandler.isNewsGo = true;
+                    }
                 }
                 catch (Exception e)
                 {
@@ -56,7 +62,7 @@ namespace AllTheFirefly.Programs
             }
             Console.CursorVisible = false;
         }
-        private  void ConvertMp3ToWav(string _inPath_, string _outPath_)
+        private void ConvertMp3ToWav(string _inPath_, string _outPath_)
         {
             using (Mp3FileReader mp3 = new Mp3FileReader(_inPath_))
             {
